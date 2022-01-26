@@ -19,13 +19,13 @@ border-radius: 10px;
 border: none;
 font-size 1.8rem`;
 
-const useMoneda = (label,stateI,options) => {
+const useCriptomoneda = (label,stateI,options) => {
     //State de nuestro custom hook
     const [state,setState] = useState(stateI);
     const onChange = e => {
         setState(e.target.value)
     }
-    const Seleccionar = () =>(
+    const SelectCripto = () =>(
         <Fragment>
             <Label>{label}</Label>
             <Select
@@ -33,14 +33,14 @@ const useMoneda = (label,stateI,options) => {
             value={state}
             >
                 <option value="">---Seleccione---</option>
-                {options.map(option => (
+               {/* {options.map(option => (
                     <option key={option.codigo} value={option.codigo}>{option.nombre}</option>
-                ))}
+                ))}*/}
             </Select>
         </Fragment>
     );
     //retornar state, interfaz y fn qe modifica el state
-        return [state, Seleccionar];
+        return [state, SelectCripto];
 }
 
-export default useMoneda;
+export default useCriptomoneda;
