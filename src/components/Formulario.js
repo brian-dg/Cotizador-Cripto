@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import styled from "@emotion/styled";
 import useMoneda from "../hooks/useMoneda";
-import useCriptomoneda from "../hooks/useCriptomoneda";
+import {monedas} from '../data/moneda';
+
 
 const Boton = styled.input `
 margin-top:20px;
@@ -21,21 +22,38 @@ transition: background-color: .3s ease;
 }`;
 
 const Formulario = () => {
-    const MONEDAS = [
-        {codigo: 'USD', nombre: 'Dolar Estado Unidense'},
-        {codigo: 'MXN', nombre: 'Peso Mexicano'},
-        {codigo: 'EUR', nombre: 'Euro'},
-        {codigo: 'GBP', nombre: 'Libra'}
-]
+  
+    const [criptos, setCriptos ] = useState([]);
     //utilizar useMoneda
-    const [moneda,SelectMonedas] = useMoneda('Elige tu moneda:','',MONEDAS);
+    const [moneda,SelectMonedas] = useMoneda('Elige tu moneda:','',monedas);
 
     //utilizar criptomoneda
-    const [criptomoneda,SelectCripto] = useCriptomoneda('Elige tu Criptomoneda','');
+    const [criptomoneda,SelectCripto] = useMoneda('Elige tu Criptomoneda','',criptos);
+
+    useEffect(() => {
+        const consultarAPI = async() => {
+            const url = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD"
+            const respuesta = await fetch(url);
+            const resultado = await respuesta.json();
+           
+            const arrayCripto = resultado.Data.map(crypto => {
+                const objeto = {
+                    id: crypto.CoinInfo.Name,
+                    nombre: crypto.CoinInfo.FullName
+                }
+                return objeto;
+            });
+            setCriptos(arrayCripto);
+        }
+        consultarAPI();
+    }) 
+
+
     return(
         <form>
             <SelectMonedas />
             <SelectCripto />
+
             <Boton 
                 type="submit"
                 value="Calcular"

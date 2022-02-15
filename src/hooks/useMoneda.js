@@ -19,9 +19,9 @@ border-radius: 10px;
 border: none;
 font-size 1.8rem`;
 
-const useMoneda = (label,stateI,options) => {
+const useMoneda = (label,options) => {
     //State de nuestro custom hook
-    const [state,setState] = useState(stateI);
+    const [state,setState] = useState('stateI');
     const onChange = e => {
         setState(e.target.value)
     }
@@ -34,7 +34,7 @@ const useMoneda = (label,stateI,options) => {
             >
                 <option value="">---Seleccione---</option>
                 {options.map(option => (
-                    <option key={option.codigo} value={option.codigo}>{option.nombre}</option>
+                    <option key={option.id} value={option.id}>{option.nombre}</option>
                 ))}
             </Select>
         </Fragment>
