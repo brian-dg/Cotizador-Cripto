@@ -1,4 +1,4 @@
-import React, {Fragment,useState} from "react";
+import React, {useState} from "react";
 import styled from "@emotion/styled";
 
 const Label = styled.label `
@@ -19,25 +19,28 @@ border-radius: 10px;
 border: none;
 font-size 1.8rem`;
 
-const useMoneda = (label,options) => {
+const useMoneda = (label,opciones) => {
     //State de nuestro custom hook
-    const [state,setState] = useState('stateI');
-    const onChange = e => {
-        setState(e.target.value)
-    }
+    const [state,setState] = useState('');
+   
     const Seleccionar = () =>(
-        <Fragment>
+        <>
             <Label>{label}</Label>
             <Select
-            onChange={onChange}
             value={state}
+            onChange={e => setState(e.target.value)}
+            
             >
-                <option value="">---Seleccione---</option>
-                {options.map(option => (
-                    <option key={option.id} value={option.id}>{option.nombre}</option>
+                <option value="">Seleccione</option>
+
+                {opciones.map(option => (
+                    <option
+                        key={option.id}
+                        value={option.id}
+                    >{option.nombre}</option>
                 ))}
             </Select>
-        </Fragment>
+        </>
     );
     //retornar state, interfaz y fn qe modifica el state
         return [state, Seleccionar];
