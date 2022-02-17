@@ -52,6 +52,7 @@ function App() {
       
       const cotizarCripto = async () => {
         setCargando(true);
+        setResultado({})
         const {moneda,criptomonedas} = monedas;
         const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomonedas}&tsyms=${moneda}`;
       
